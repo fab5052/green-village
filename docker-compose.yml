@@ -9,7 +9,7 @@ services:
             dockerfile: ./automation/docker/Dockerfile
         container_name: server
         volumes:
-            - ./:/var/www/html
+            - ./:/var/www/
         links:
             - mysql
         ports:
