@@ -79,5 +79,7 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 # Define workdir
 WORKDIR /var/www/
 
+EXPOSE 80
+
 # Run
 CMD ["/usr/local/bin/docker-entrypoint.sh"]
