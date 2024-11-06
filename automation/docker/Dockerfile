@@ -10,7 +10,9 @@ RUN apt-get update && apt-get install -y \
     nano \
     wget \
     zip\
-    git-all
+    git-all\
+    nodejs\
+    npm
 
 # Apache modules
 RUN a2enmod \
@@ -28,17 +30,7 @@ RUN docker-php-ext-install \
 RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini \
     && echo 'short_open_tag = Off' >> /usr/local/etc/php/php.ini 
 
-
-RUN apt update && apt install -yqq nodejs npm
-
 COPY . /var/www/
-
-COPY ./docker/apache.conf /etc/apache2/sites-available/000-default.conf
-
-RUN cd /var/www && \
-    composer install && \
-    npm install --force && \
-    npm run build
     
 WORKDIR /var/www/
 

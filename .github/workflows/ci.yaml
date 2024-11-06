@@ -10,14 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: false
     services:
-      postgres:
-        image: postgres
+      server:
+        image: mysql
         env:
-          POSTGRES_PASSWORD: postgres
+          MYSQL_PASSWORD: mysql
         ports:
           - ""
         options: >-
-          --health-cmd pg_isready
+          --health-cmd mysql_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
