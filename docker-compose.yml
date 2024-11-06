@@ -22,7 +22,7 @@ services:
             MYSQL_USER: ${DB_USER:-admin}
             MYSQL_PASSWORD: ${DB_PASSWORD:-ChangeMe}
         ports:
-            - ${DB_PORT:-3306}:${DB_PORT:-3306}
+            - ${DB_PORT:-3307}:${DB_PORT:-3306}
 
     phpmyadmin:
         image: phpmyadmin:latest
