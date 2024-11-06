@@ -2,9 +2,6 @@
 
 # Base
 FROM php:8.3.7-apache-bookworm
-
-# Define workdir
-WORKDIR /var/www/html
     
 # Softwares
 RUN apt-get update && apt-get install -y \
@@ -31,6 +28,19 @@ RUN docker-php-ext-install \
 RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini \
     && echo 'short_open_tag = Off' >> /usr/local/etc/php/php.ini 
 
+
+RUN apt update && apt install -yqq nodejs npm
+
+COPY . /var/www/
+
+COPY ./docker/apache.conf /etc/apache2/sites-available/000-default.conf
+
+RUN cd /var/www && \
+    composer install && \
+    npm install --force && \
+    npm run build
+    
+WORKDIR /var/www/
 
 # Add vhost
 COPY ./automation/docker/default-vhost.conf /etc/apache2/sites-available/
@@ -65,6 +75,9 @@ RUN apt-get clean \
 # Add Entrypoint
 COPY ./automation/scripts/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# Define workdir
+WORKDIR /var/www/
 
 # Run
 CMD ["/usr/local/bin/docker-entrypoint.sh"]
